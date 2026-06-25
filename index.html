@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John Venn — the picture of logic</title>
+<meta name="description" content="LOGIKĒ · the visual logic (1880) — John Venn, who gave logic its picture: overlapping circles whose regions are every combination of true/false for the terms, so a logical statement becomes a pattern of shaded zones and a syllogism becomes something you can SEE. Live: a 3-set Venn diagram — shade premises, read the conclusion off the diagram. Honest: Euler drew circles before him; Venn systematized them into a complete method, and was also a probabilist (the frequency interpretation). David Lee Wise, two-layer honest.">
+<style>
+  :root{--bg:#0c0f17;--panel:#121622;--panel2:#19202f;--edge:#2a3346;--ink:#ede6d6;--dim:#b3ad9a;--faint:#7c7660;
+    --ochre:#d9b66a;--ochre2:#f0d79a;--proof:#5ad1ff;--proof2:#a7e6ff;--one:#7fe0a0;--zero:#fb7185;--amber:#fbbf24;--ember:#fb923c;
+    --mono:'SFMono-Regular',ui-monospace,'Cascadia Code',Menlo,Consolas,monospace;--serif:'Iowan Old Style','Palatino Linotype',Palatino,Georgia,serif;}
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--serif);line-height:1.58;background-image:radial-gradient(1100px 560px at 75% -10%,#1c2436 0%,transparent 55%),radial-gradient(900px 500px at 0% 100%,#14110a 0%,transparent 55%);}
+  .wrap{max-width:1000px;margin:0 auto;padding:44px 26px 90px}
+  header{border-bottom:1px solid var(--edge);padding-bottom:22px;margin-bottom:24px}
+  .kicker{font-family:var(--mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--ochre);opacity:.95}
+  h1{font-family:Georgia,serif;font-size:38px;line-height:1.08;margin:.3em 0 .14em;font-weight:600}h1 em{color:var(--ochre2);font-style:italic}
+  .who{font-family:var(--mono);font-size:12px;color:var(--faint);letter-spacing:.04em}
+  .sub{color:var(--dim);font-size:16px;max-width:74ch;margin-top:14px}.sub b{color:var(--ink)}
+  .verdicts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin:22px 0}@media(max-width:720px){.verdicts{grid-template-columns:1fr}}
+  .vc{border:1px solid var(--edge);border-radius:11px;padding:13px 15px;border-top-width:3px;background:rgba(18,22,34,.6)}
+  .vc .badge{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:.12em}
+  .vc.s{border-top-color:var(--one)}.vc.s .badge{color:var(--one)} .vc.m{border-top-color:var(--amber)}.vc.m .badge{color:var(--amber)} .vc.f{border-top-color:var(--ember)}.vc.f .badge{color:var(--ember)}
+  .vc p{font-size:12px;color:var(--dim);margin:6px 0 0;line-height:1.45}.vc p b{color:var(--ink)}
+  section{margin:36px 0}
+  h2{font-size:13px;font-family:var(--mono);letter-spacing:.22em;text-transform:uppercase;color:var(--ochre2);border-left:2px solid var(--ochre);padding-left:11px;margin:0 0 6px}
+  .lede{color:var(--dim);font-size:15px;margin:0 0 18px;max-width:80ch}
+  .panel{background:linear-gradient(180deg,var(--panel),#0a0d14);border:1px solid var(--edge);border-radius:14px;padding:20px;box-shadow:0 24px 60px -40px #000}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:6px}
+  button{font-family:var(--mono);font-size:12px;color:var(--ink);background:#1a2030;border:1px solid var(--edge);border-radius:8px;padding:8px 12px;cursor:pointer}button:hover{background:#222b3e;border-color:var(--ochre)}
+  .stmt{font-family:var(--mono);font-size:12px;border:1px solid var(--edge);border-radius:8px;padding:7px 11px;cursor:pointer;color:var(--faint);background:#1a2030}
+  .stmt.on{border-color:var(--proof);color:var(--proof2);box-shadow:0 0 0 1px var(--proof) inset}
+  .vennwrap{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start;margin-top:10px}
+  svg{display:block;max-width:100%}
+  .legend{font-family:var(--mono);font-size:12.5px;color:var(--dim);flex:1;min-width:200px}
+  .legend .sh{color:var(--ochre2)}.legend .ex{color:var(--one)}
+  .concl{font-family:var(--mono);font-size:14px;color:var(--proof2);margin-top:10px;min-height:22px}.concl b{color:var(--one)}
+  .note{color:var(--dim);font-size:13.5px;border-left:2px solid var(--edge);padding-left:13px;margin:16px 0 0}.note b{color:var(--ink)}
+  .thm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}@media(max-width:620px){.thm{grid-template-columns:1fr}}
+  .tm{border:1px solid var(--edge);border-radius:10px;padding:13px 15px;background:rgba(0,0,0,.14)}.tm b{color:var(--ochre2);font-family:var(--mono);font-size:11px}.tm p{font-size:13px;color:var(--dim);margin:6px 0 0}
+  footer{margin-top:44px;border-top:1px solid var(--edge);padding-top:18px;color:var(--faint);font-family:var(--mono);font-size:11px;line-height:1.7}
+  footer a,.bar2 a{color:var(--ochre)}.bar2{font-family:var(--mono);font-size:11.5px;margin-bottom:16px}.bar2 a{text-decoration:none;border-bottom:1px dotted #4a4126}
+  code{font-family:var(--mono);color:var(--ochre2);background:#15120a;padding:1px 5px;border-radius:5px}
+  blockquote{margin:14px 0;padding:10px 16px;border-left:3px solid var(--ochre);color:var(--ink);font-style:italic;font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="bar2"><a href="https://davidwise01.github.io/ud0/">◄ UD0</a> &nbsp; <a href="https://davidwise01.github.io/william-stanley-jevons/">← Jevons</a> &nbsp; LOGIKĒ · the visual logic</div>
+<header>
+  <div class="kicker">LOGIKĒ · the visual logic · 1880</div>
+  <h1>John <em>Venn</em></h1>
+  <div class="who">1834 – 1923 · Hull &amp; Cambridge · logician &amp; probabilist · Gonville &amp; Caius College</div>
+  <div class="sub">Boole and Jevons made logic a matter of combinations — every possible truth-assignment of the terms. John Venn made those combinations something you can <b>see</b>. Draw overlapping circles for the terms, and the plane divides into <b>regions</b>, one for each combination (in A and B but not C; in all three; in none). A logical statement becomes a <b>pattern of shading</b> — to say "no A are B," you simply blacken the lens where A and B overlap — and a syllogism becomes a picture: shade what the premises forbid, and the conclusion is whatever the diagram now shows. It is the most successful piece of <b>notation</b> in the history of logic — the one diagram that escaped the seminar room and turned up on whiteboards, in courtrooms, and on T-shirts.</div>
+</header>
+<div class="verdicts">
+  <div class="vc s"><span class="badge">✓ STRONG</span><p><b>A complete, correct method.</b> The Venn diagram is a sound and general visual system for class logic: every region is a real combination, every categorical statement is a shading, and syllogistic validity becomes literally visible. Rigorous, not just a teaching aid.</p></div>
+  <div class="vc m"><span class="badge">◐ EULER CAME FIRST</span><p><b>He systematized, didn't originate.</b> Leonhard Euler drew logical circles a century earlier — but Euler's diagrams couldn't show "maybe empty" regions. Venn's innovation was to draw <em>all</em> regions always, then shade — making the method complete.</p></div>
+  <div class="vc f"><span class="badge">◔ BREAKS DOWN PAST 3–4 SETS</span><p><b>A picture has limits.</b> Three circles give all 8 regions cleanly; four need ellipses; beyond that the diagram becomes unreadable. Venn diagrams illuminate small logic beautifully and scale to nothing — the eye is not a general computer.</p></div>
+</div>
+
+<section>
+  <h2>I · Shade the premises, see the conclusion</h2>
+  <p class="lede">Three circles, <b>A B C</b>, carve the plane into eight regions — every combination of in/out. A categorical premise <em>shades</em> regions: "All A are B" greys out the part of A outside B (it must be empty); "No B are C" greys the B-C overlap. Toggle the classic syllogism premises and watch the diagram do the reasoning — the conclusion is simply what the un-shaded regions allow.</p>
+  <div class="panel">
+    <div class="controls" id="stmts"></div>
+    <div class="vennwrap">
+      <svg id="venn" viewBox="0 0 300 250" width="300" height="250"></svg>
+      <div class="legend" id="legend"></div>
+    </div>
+    <div class="concl" id="concl"></div>
+    <div class="note">Shading = "this region must be empty." When the premises have greyed out every region where something could be A-but-not-C, you can <em>see</em> that all A are C — the conclusion isn't deduced in symbols, it's <b>looked at</b>. ⚑ This is logic made spatial: the same elimination [[william-stanley-jevons]]'s piano did mechanically, Venn did <em>visually</em> — and unlike the piano, the picture is so natural that almost everyone who has ever sorted two ideas has drawn one without knowing whose it was.</div>
+  </div>
+  <blockquote>"I began at once to think whether [the diagrams] might not be made of more general application." <span style="color:var(--faint);font-style:normal;font-size:12px">— John Venn, on improving Euler's circles</span></blockquote>
+</section>
+
+<section>
+  <h2>II · Why the picture worked</h2>
+  <div class="thm">
+    <div class="tm"><b>ALWAYS DRAW EVERY REGION</b><p>Euler's circles only showed the relations that held, so they couldn't represent uncertainty. Venn's fix: always draw all overlaps (all 2ⁿ regions), then <em>shade</em> the empty ones. A region left blank means "possibly occupied" — the diagram can now say "don't know."</p></div>
+    <div class="tm"><b>SHADING = ELIMINATION</b><p>A universal premise blackens regions (they're empty); a particular premise marks a region as occupied. Validity becomes visible: a conclusion holds iff the picture already shows it. Class logic, rendered as geometry.</p></div>
+  </div>
+  <p class="lede" style="margin-top:16px">Venn's diagram is the rare piece of mathematics that became <em>folk knowledge</em>. The reason it spread is the reason it matters here: it makes the structure of [[george-boole]]'s algebra <b>perceptible</b> — the eight regions of a three-circle diagram are literally the eight rows of a three-variable truth table, the eight keys of [[william-stanley-jevons]]'s piano, the eight minterms a logic designer juggles. Shade-to-eliminate is the same move as a Karnaugh map, the tool every circuit engineer uses to simplify gates. Venn didn't add a theorem to logic; he added an <b>organ of perception</b> for it — and a notation that good lets people reason correctly without ever knowing they're doing logic at all. ⚑ The truth table you can look at.</p>
+</section>
+
+<section>
+  <h2>III · The diagram, and the man behind it</h2>
+  <p class="note" style="border-color:var(--amber)"><b style="color:var(--amber)">Gate kept on.</b> The contribution is <b>real, complete, and astonishingly durable</b> — the Venn diagram is a sound general method for class logic, not a mere mnemonic, and it is arguably the most widely recognised object in all of mathematics. The honest qualifications. First, <b>priority</b>: Venn did not invent logical circles — <em>Leonhard Euler</em> used them a century earlier, and others before him; Venn's genuine innovation was to draw <em>every</em> region always and use <em>shading</em>, which made the diagrams able to represent ignorance and thus complete (he was generous about the debt, calling them "Eulerian circles" he had improved). Second, <b>scope</b>: the method is gorgeous for two or three classes, awkward at four (you need ellipses), and unreadable beyond — the picture illuminates <em>small</em> logic and scales to nothing, which is exactly why symbolic methods, not diagrams, run real systems. The man: John Venn was a Cambridge logician and probability theorist (an early champion of the <em>frequency</em> interpretation of probability), an ordained priest who left the clergy over doctrine, and a skilled builder of machines — he made a cricket bowling machine that clean-bowled a star of the Australian team. He gave logic the one thing the symbols never could: a face. ⚑ [[william-stanley-jevons]] ← · next → William of Ockham (the medieval root).</p>
+</section>
+
+<footer>
+  JOHN VENN · LOGIKĒ · the visual logic · two-layer honest<br>
+  live 3-set Venn diagram (eight regions = every combination; universal premises shade regions empty; the conclusion is read off the picture — verified All A→B + All B→C shows All A→C)<br>
+  the Venn diagram (1880) = the complete visual method for class logic · shading = elimination · the eight regions = a 3-variable truth table · also a frequency-probabilist<br>
+  ← <a href="https://davidwise01.github.io/william-stanley-jevons/">Jevons</a> · next → <b>William of Ockham</b> (the medieval root &amp; the razor)<br>
+  LOGIKĒ · the lineage of logical mathematics · governor David Lee Wise · CC-BY-ND-4.0
+</footer>
+</div>
+<script>
+"use strict";
+(function(){
+  const $=id=>document.getElementById(id);
+  // three circles A,B,C; 8 regions by membership. We render shading per region.
+  // region centroids (approx) for the standard 3-venn
+  const CX=300, CY=250;
+  const A={x:115,y:105,r:78}, B={x:185,y:105,r:78}, C={x:150,y:165,r:78};
+  // statements shade regions (mark empty). each returns predicate: region [a,b,c] is FORBIDDEN(empty) if f true
+  const STMTS=[
+    {id:'allAB', txt:'All A are B', emp:([a,b,c])=>a&&!b},
+    {id:'allBC', txt:'All B are C', emp:([a,b,c])=>b&&!c},
+    {id:'noBC',  txt:'No B are C',  emp:([a,b,c])=>b&&c},
+    {id:'noAC',  txt:'No A are C',  emp:([a,b,c])=>a&&c}
+  ];
+  let on={allAB:true, allBC:true, noBC:false, noAC:false};
+  // approximate clip via SVG: draw 8 region labels with shading using clipped circles is complex;
+  // simpler: render the 3 circles + shade region centroids with dots/fills using a coarse pixel test.
+  function inA(x,y){return (x-A.x)**2+(y-A.y)**2<=A.r*A.r;}
+  function inB(x,y){return (x-B.x)**2+(y-B.y)**2<=B.r*B.r;}
+  function inC(x,y){return (x-C.x)**2+(y-C.y)**2<=C.r*C.r;}
+  function regOf(x,y){return [inA(x,y)?1:0,inB(x,y)?1:0,inC(x,y)?1:0];}
+  function forbidden(reg){ return STMTS.some(s=>on[s.id]&&s.emp(reg)); }
+  function render(){
+    $('stmts').innerHTML=STMTS.map(s=>'<span class="stmt'+(on[s.id]?' on':'')+'" data-id="'+s.id+'">'+s.txt+'</span>').join('');
+    $('stmts').querySelectorAll('.stmt').forEach(e=>e.onclick=()=>{on[e.dataset.id]=!on[e.dataset.id];render();});
+    // pixel-shade forbidden regions inside the union of circles
+    let dots='';
+    for(let y=10;y<245;y+=5) for(let x=10;x<295;x+=5){
+      const reg=regOf(x,y); if(reg[0]+reg[1]+reg[2]===0) continue;
+      if(forbidden(reg)) dots+='<rect x="'+(x-2.5)+'" y="'+(y-2.5)+'" width="5" height="5" fill="#fb7185" opacity="0.5"/>';
+    }
+    const circ=(c,col,lx,ly,lab)=>'<circle cx="'+c.x+'" cy="'+c.y+'" r="'+c.r+'" fill="none" stroke="'+col+'" stroke-width="2" opacity="0.85"/>'+
+      '<text x="'+lx+'" y="'+ly+'" fill="'+col+'" font-family="monospace" font-size="15" font-weight="700">'+lab+'</text>';
+    $('venn').innerHTML=dots+circ(A,'#d9b66a',38,70,'A')+circ(B,'#5ad1ff',262,70,'B')+circ(C,'#7fe0a0',150,238,'C');
+    // legend: list survivors
+    const survs=[]; for(let i=0;i<8;i++){const r=[(i>>2)&1,(i>>1)&1,i&1]; if(r[0]+r[1]+r[2]===0) continue; if(!forbidden(r)) survs.push((r[0]?'A':'')+(r[1]?'B':'')+(r[2]?'C':'')); }
+    $('legend').innerHTML='<div class="sh">red = ruled empty by the premises.</div><div style="margin-top:8px">regions still possible:<br><span class="ex">'+(survs.join(' · ')||'none — inconsistent')+'</span></div>';
+    // conclusion: any A region must be C?
+    const aRegs=survs.filter(s=>s.includes('A'));
+    let msg='';
+    if(survs.length===0) msg='<span style="color:var(--zero)">premises inconsistent</span>';
+    else if(aRegs.length && aRegs.every(s=>s.includes('C'))) msg='the diagram shows: <b>All A are C</b>';
+    else if(aRegs.length && aRegs.every(s=>!s.includes('C'))) msg='the diagram shows: <b>No A are C</b>';
+    else msg='<span style="color:var(--faint)">no single A–C conclusion forced</span>';
+    $('concl').innerHTML=msg;
+  }
+  render();
+})();
+</script>
+</body>
+</html>
